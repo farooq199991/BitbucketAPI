@@ -1,0 +1,82 @@
+buildscript {
+  ext.VERSION = [
+    SpringBoot:'1.4.0.RELEASE',
+    SpringGradlePlugin:'0.5.1.RELEASE'
+  ]
+  repositories { mavenCentral() }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:$VERSION.SpringBoot")
+    classpath("io.spring.gradle:dependency-management-plugin:$VERSION.SpringGradlePlugin")
+  }
+}
+
+ext.VERSION = [
+  gradle:'2.9',
+  java:'1.8',
+  JUnit:'4.12',
+  Swagger:'2.4.0',
+  LogBack:'1.1.7'
+]
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'spring-boot'
+apply plugin: 'io.spring.dependency-management'
+
+springBoot { executable = true }
+jar {
+  baseName = 'bitbucket'
+  version = '1.0' 
+}
+ 
+eclipse {  project.natures 'org.eclipse.buildship.core.gradleprojectnature'  }
+
+test {
+  jvmArgs project.gradle.startParameter.systemPropertiesArgs.entrySet().collect{"-D${it.key}=${it.value}"}
+ 
+}
+
+mainClassName = "com.connecture.bitbucket.config.Application"
+
+
+task boot(type: JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'com.connecture.bitbucket.config.Application'
+}
+sourceCompatibility = VERSION.java
+targetCompatibility = VERSION.java
+
+repositories {
+  mavenCentral()
+  jcenter()
+}
+configurations {
+  runtime.exclude group: "org.slf4j", module: "slf4j-log4j12"
+}
+dependencies {
+  compile("org.springframework.boot:spring-boot-starter"){ exclude module: 'spring-boot-starter-logging'  }
+  compile("org.springframework.boot:spring-boot-starter-web")
+  compile("org.springframework.boot:spring-boot-starter-test")
+  compile("org.springframework.boot:spring-boot-starter-jdbc")
+  compile("org.springframework.boot:spring-boot-starter-actuator")
+  compile("io.spring.platform:platform-bom:1.1.3.RELEASE")
+  
+  compile("javax.inject:javax.inject:1")
+  compile("io.springfox:springfox-swagger2:$VERSION.Swagger")
+  compile("io.springfox:springfox-swagger-ui:$VERSION.Swagger")
+  compile("org.jvnet.jaxb2_commons:jaxb2-basics-runtime:0.6.4")
+  compile("com.googlecode.json-simple:json-simple:1.1.1")
+  compile("org.apache.httpcomponents:httpclient:4.3.6")
+  compile("org.apache.commons:commons-lang3:3.0")
+  compile("org.apache.commons:commons-collections4:4.0")
+  
+  
+ 
+  compile group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
+  
+  testCompile("junit:junit:$VERSION.JUnit")
+  testCompile("org.mockito:mockito-all:1.8.4")
+  
+}
+
+task wrapper(type: Wrapper) { gradleVersion = VERSION.gradle }
