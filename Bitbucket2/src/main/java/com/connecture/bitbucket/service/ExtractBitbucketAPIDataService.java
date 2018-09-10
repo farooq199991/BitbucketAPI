@@ -34,33 +34,37 @@ public class ExtractBitbucketAPIDataService {
 
 					{
 						UserCom userCom = valueComments.getUser();
-						
+
 						if (userCom != null) {
-							if(userCom.getDisplay_name().equalsIgnoreCase("Connecture BuildMaster"))
-							{
+							if (userCom.getDisplay_name().equalsIgnoreCase("Connecture BuildMaster")) {
 								FinalData finaldata = new FinalData();
-								finaldata.setTicketNumber(values.getSource().getBranch().getName());
+
+								finaldata.setTicketNumber(CommentesAndTicketNumberFilterService
+										.ticketNumberFilter(values.getSource().getBranch().getName()));
 								finaldata.setPr_id(values.getId());
 								finaldata.setPr_state(values.getState());
 								finaldata.setAuthor(values.getAuthor().getDisplay_name());
-								finaldata.setComment(CommentesFilterService.commentFilter(valueComments.getContent().getRaw()));
+								finaldata.setComment(CommentesAndTicketNumberFilterService
+										.commentFilter(valueComments.getContent().getRaw()));
 								finaldata.setComment_Date(valueComments.getCreated_on());
 								finaldata.setComment_Author(userCom.getDisplay_name());
 								finaldata.setBranch_Name(values.getDestination().getBranch().getName());
 								listFinaldata.add(finaldata);
 							}
-							
-							else{
-							FinalData finaldata = new FinalData();
-							finaldata.setTicketNumber(values.getSource().getBranch().getName());
-							finaldata.setPr_id(values.getId());
-							finaldata.setPr_state(values.getState());
-							finaldata.setAuthor(values.getAuthor().getDisplay_name());
-							finaldata.setComment(CommentesFilterService.exclamationMarkFilter(valueComments.getContent().getRaw()));
-							finaldata.setComment_Date(valueComments.getCreated_on());
-							finaldata.setComment_Author(userCom.getDisplay_name());
-							finaldata.setBranch_Name(values.getDestination().getBranch().getName());
-							listFinaldata.add(finaldata);
+
+							else {
+								FinalData finaldata = new FinalData();
+								finaldata.setTicketNumber(CommentesAndTicketNumberFilterService
+										.ticketNumberFilter(values.getSource().getBranch().getName()));
+								finaldata.setPr_id(values.getId());
+								finaldata.setPr_state(values.getState());
+								finaldata.setAuthor(values.getAuthor().getDisplay_name());
+								finaldata.setComment(CommentesAndTicketNumberFilterService
+										.exclamationMarkFilter(valueComments.getContent().getRaw()));
+								finaldata.setComment_Date(valueComments.getCreated_on());
+								finaldata.setComment_Author(userCom.getDisplay_name());
+								finaldata.setBranch_Name(values.getDestination().getBranch().getName());
+								listFinaldata.add(finaldata);
 							}
 						}
 					}
