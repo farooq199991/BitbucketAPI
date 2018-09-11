@@ -10,7 +10,7 @@ import com.connecture.bitbucket.pullrequest.PullrequestComments;
 public interface BitbucketService {
 	public void initialize();
     
-	public PullrequestComments getPullRequests(String u);
+	public PullrequestComments getPullRequests(String commentsEndPoint);
 	
 	public PullRequestAPI getPullRequestsActivity(String endPoint);
 
