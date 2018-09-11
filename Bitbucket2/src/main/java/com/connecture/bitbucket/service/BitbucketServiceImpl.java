@@ -75,7 +75,7 @@ public class BitbucketServiceImpl implements BitbucketService {
 	}
 	
 	@Override
-	public PullrequestComments getPullRequests(String u) {
+	public PullrequestComments getPullRequests(String commentsEndPoint) {
 		PullrequestComments result1 = null;
 		try {
 			ResponseEntity<Map> responseEntity = restTemplate.exchange(u, HttpMethod.GET, getHttpEntity(), Map.class);
