@@ -16,25 +16,6 @@ import com.connecture.bitbucket.rest.BitbucketRest;
 @Component
 public class ExtractBitbucketAPIDataService {
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Autowired
 	private BitbucketServiceImpl bitbucketServiceImp;
 	
